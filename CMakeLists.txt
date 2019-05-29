@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 2.8.12)
 project(pinocchio)
 
 find_package(catkin REQUIRED COMPONENTS eigenpy)
-find_package(Eigen3 REQUIRED)
+
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+find_package(Eigen3 3.0.0 REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system)
 
 include(ExternalProject)
@@ -16,7 +18,7 @@ ExternalProject_Add(pinocchio_src
   UPDATE_COMMAND ""
   PATCH_COMMAND ""
   TEST_COMMAND ""
-  CMAKE_ARGS -DBUILD_UNIT_TESTS:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=${PROJECT_BINARY_DIR}/install -Deigenpy_FOUND=${eigenpy_FOUND} -Deigenpy_INCLUDE_DIRS=${eigenpy_INCLUDE_DIRS} -Deigenpy_LIBRARIES=${eigenpy_LIBRARIES} -DEIGEN3_INCLUDE_DIR=${EIGEN3_INCLUDE_DIR} -DBUILD_PYTHON_INTERFACE:BOOL=ON #-DPYTHON_DEB_LAYOUT:BOOL=${SETUPTOOLS_DEB_LAYOUT} - we copy from site-packages
+  CMAKE_ARGS -DBUILD_UNIT_TESTS:BOOL=ON -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=${PROJECT_BINARY_DIR}/install -Deigenpy_FOUND=${eigenpy_FOUND} -Deigenpy_INCLUDE_DIRS=${eigenpy_INCLUDE_DIRS} -Deigenpy_LIBRARIES=${eigenpy_LIBRARIES} -DEIGEN3_INCLUDE_DIR=${EIGEN3_INCLUDE_DIR} -DBUILD_PYTHON_INTERFACE:BOOL=ON #-DPYTHON_DEB_LAYOUT:BOOL=${SETUPTOOLS_DEB_LAYOUT} - we copy from site-packages
 )
 ExternalProject_Add_Step(pinocchio_src CopyToDevel
   COMMENT "Copying to devel"
