@@ -9,7 +9,8 @@ find_package(Boost REQUIRED COMPONENTS system)
 
 include(ExternalProject)
 
-add_definitions(-Wno-conversions -Wno-deprecated)
+add_definitions(-Wno-conversions)
+add_definitions(-Wno-deprecated-declarations)
 
 ExternalProject_Add(pinocchio_src
   GIT_REPOSITORY "https://github.com/stack-of-tasks/pinocchio.git"
