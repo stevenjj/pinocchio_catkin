@@ -22,7 +22,7 @@ ExternalProject_Add(pinocchio_src
   UPDATE_COMMAND ""
   PATCH_COMMAND ""
   TEST_COMMAND ""
-  CMAKE_ARGS -DBUILD_WITH_COLLISION_SUPPORT:BOOL=ON -DBUILD_UNIT_TESTS:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=${PROJECT_BINARY_DIR}/install -Deigenpy_FOUND=${eigenpy_FOUND} -Deigenpy_INCLUDE_DIRS=${eigenpy_INCLUDE_DIRS} -Deigenpy_LIBRARIES=${eigenpy_LIBRARIES} -DHPP_FCL_FOUND=${hpp-fcl_FOUND} -Dhpp-fcl_INCLUDE_DIRS=${hpp-fcl_INCLUDE_DIRS} -Dhpp-fcl_LIBRARIES=${hpp-fcl_LIBRARIES} -Dassimp_INCLUDE_DIRS=/usr/lib/include -DPINOCCHIO_WITH_HPP_FCL=1
+  CMAKE_ARGS -DBUILD_WITH_COLLISION_SUPPORT:BOOL=ON -DBUILD_UNIT_TESTS:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=${PROJECT_BINARY_DIR}/install -Deigenpy_FOUND=${eigenpy_FOUND} -Deigenpy_INCLUDE_DIRS=${eigenpy_INCLUDE_DIRS} -Deigenpy_LIBRARIES=${eigenpy_LIBRARIES} -Dhpp-fcl_FOUND=${hpp-fcl_FOUND} -Dhpp-fcl_INCLUDE_DIRS=${hpp-fcl_INCLUDE_DIRS} -Dhpp-fcl_LIBRARIES=${hpp-fcl_LIBRARIES} -Dassimp_INCLUDE_DIRS=/usr/lib/include
 )
 ExternalProject_Add_Step(pinocchio_src CopyToDevel
   COMMENT "Copying to devel"
@@ -40,7 +40,7 @@ if(IS_DIRECTORY ${CMAKE_INSTALL_PREFIX})
   catkin_package(
     INCLUDE_DIRS include/${PROJECT_NAME} ${EIGEN3_INCLUDE_DIR}
     LIBRARIES ${PYTHON_LIBRARIES} pinocchio
-    DEPENDS urdfdom urdfdom_headers Boost hpp-fcl
+    DEPENDS urdfdom urdfdom_headers Boost
     CFG_EXTRAS pinocchio.cmake
     # SKIP_PKG_CONFIG_GENERATION
   )
