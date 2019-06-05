@@ -6,7 +6,7 @@ find_package(catkin REQUIRED COMPONENTS eigenpy hpp-fcl)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 find_package(Eigen3 3.0.0 REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system)
-find_package(assimp REQUIRED)
+find_package(assimp 3.2 REQUIRED)
 include_directories(${ASSIMP_INCLUDE_DIRS} /usr/include)
 
 include(ExternalProject)
