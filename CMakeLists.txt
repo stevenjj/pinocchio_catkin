@@ -1,11 +1,13 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(pinocchio)
 
-find_package(catkin REQUIRED COMPONENTS eigenpy)
+find_package(catkin REQUIRED COMPONENTS eigenpy hpp-fcl)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 find_package(Eigen3 3.0.0 REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system)
+find_package(assimp REQUIRED)
+include_directories(${ASSIMP_INCLUDE_DIRS} /usr/include)
 
 include(ExternalProject)
 
@@ -15,11 +17,12 @@ add_definitions(-Wno-deprecated-declarations)
 ExternalProject_Add(pinocchio_src
   GIT_REPOSITORY "https://github.com/stack-of-tasks/pinocchio.git"
   GIT_TAG "v2.1.3"
+  GIT_SUBMODULES cmake
 
   UPDATE_COMMAND ""
   PATCH_COMMAND ""
   TEST_COMMAND ""
-  CMAKE_ARGS -DBUILD_UNIT_TESTS:BOOL=ON -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=${PROJECT_BINARY_DIR}/install -Deigenpy_FOUND=${eigenpy_FOUND} -Deigenpy_INCLUDE_DIRS=${eigenpy_INCLUDE_DIRS} -Deigenpy_LIBRARIES=${eigenpy_LIBRARIES} -DEIGEN3_INCLUDE_DIR=${EIGEN3_INCLUDE_DIR} -DBUILD_PYTHON_INTERFACE:BOOL=ON #-DPYTHON_DEB_LAYOUT:BOOL=${SETUPTOOLS_DEB_LAYOUT} - we copy from site-packages
+  CMAKE_ARGS -DBUILD_WITH_COLLISION_SUPPORT:BOOL=ON -DBUILD_UNIT_TESTS:BOOL=OFF -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=${PROJECT_BINARY_DIR}/install -Deigenpy_FOUND=${eigenpy_FOUND} -Deigenpy_INCLUDE_DIRS=${eigenpy_INCLUDE_DIRS} -Deigenpy_LIBRARIES=${eigenpy_LIBRARIES} -DHPP_FCL_FOUND=${hpp-fcl_FOUND} -Dhpp-fcl_INCLUDE_DIRS=${hpp-fcl_INCLUDE_DIRS} -Dhpp-fcl_LIBRARIES=${hpp-fcl_LIBRARIES} -Dassimp_INCLUDE_DIRS=/usr/lib/include -DPINOCCHIO_WITH_HPP_FCL=1
 )
 ExternalProject_Add_Step(pinocchio_src CopyToDevel
   COMMENT "Copying to devel"
@@ -37,7 +40,7 @@ if(IS_DIRECTORY ${CMAKE_INSTALL_PREFIX})
   catkin_package(
     INCLUDE_DIRS include/${PROJECT_NAME} ${EIGEN3_INCLUDE_DIR}
     LIBRARIES ${PYTHON_LIBRARIES} pinocchio
-    DEPENDS urdfdom urdfdom_headers Boost
+    DEPENDS urdfdom urdfdom_headers Boost hpp-fcl
     CFG_EXTRAS pinocchio.cmake
     # SKIP_PKG_CONFIG_GENERATION
   )

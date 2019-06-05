@@ -16,4 +16,6 @@
   <depend>eigen</depend>
   <depend>boost</depend>
   <depend>eigenpy</depend>
+  <depend>hpp-fcl</depend>
+  <depend>assimp</depend>  
 </package>
